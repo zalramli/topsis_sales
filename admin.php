@@ -2,7 +2,10 @@
 <html lang="en">
 
 <head>
-	<?php include "_partials/head.php"; ?>
+	<?php 
+	include "koneksi/koneksi.php";
+	include "_partials/head.php"; 
+	?>
 </head>
 
 <body>
@@ -30,6 +33,12 @@
                     // Parsing halaman Pegawai
                     if ($_GET['halaman'] == 'karyawan') {
                         include "system/master/karyawan/tampil.php";
+					}
+					if ($_GET['halaman'] == 'kriteria') {
+                        include "system/master/kriteria/tampil.php";
+					}
+					if ($_GET['halaman'] == 'total_penjualan') {
+                        include "system/transaksi/total_penjualan/tampil.php";
                     }
                 ?>
 			</div>
