@@ -20,9 +20,16 @@ if(isset($_POST['simpan']))
     $no_hp = $_POST['no_hp'];
     $query_insert = mysqli_query($koneksi, "INSERT INTO karyawan (id_karyawan,nama_karyawan,tgl_diterima,alamat,no_hp) VALUES ('$id_karyawan','$nama_karyawan','$tgl_diterima','$alamat','$no_hp') ");
     if ($query_insert) {
+        date_default_timezone_set('Asia/Jakarta');
         $value_kriteria = [];
         $tampil_kriteria = mysqli_query($koneksi,"SELECT * FROM kriteria");
-        $value_kriteria = [$tgl_diterima,0,0];
+        $sekarang = date("Y-m-d");
+        $selisih = ((strtotime ($sekarang) - strtotime ($tgl_diterima))/(60*60*24));
+        $lama_kerja = (int) $selisih;
+        $absensi_temp = $lama_kerja / 7;
+        $absensi = round($absensi_temp);
+        $total_absensi = $lama_kerja - $absensi;
+        $value_kriteria = [$tgl_diterima,0,$total_absensi];
             for($i=0;$i<3;$i++)
             {
                 $data_kriteria = mysqli_fetch_array($tampil_kriteria);
@@ -100,20 +107,7 @@ if(isset($_POST['update']))
                                 <label for="inputEmail2">Tanggal Diterima </label>
                                 <div class="row">
                                     <div class="form-group col-sm-3">
-                                        <select name="tanggal" id="" class="form-control form-control-sm" id="inputEmail2">
-                                            <?php 
-                                            for($i=1;$i<=31;$i++)
-                                            {
-                                                if($i<10)
-                                                {
-                                                    $i = "0".$i;
-                                                }
-                                            ?>
-                                            <option value="<?php echo $i ?>"><?php echo $i; ?></option>
-                                            <?php 
-                                            }
-                                            ?>
-                                        </select>
+                                        <input type="text" name="tanggal" class="form-control form-control-sm" id="inputEmail2" placeholder="Tanggal" required>
                                     </div>
                                     <div class="form-group col-sm-5">
                                         <select name="bulan" id="" class="form-control form-control-sm" id="inputEmail2">
@@ -132,18 +126,7 @@ if(isset($_POST['update']))
                                         </select>
                                     </div>
                                     <div class="form-group col-sm-4">
-                                    <select name="tahun" id="" class="form-control form-control-sm" id="inputEmail2">
-                                            <?php 
-                                            $tahun = (int) date('Y');
-                                            $batas = $tahun - 20;
-                                            for($j=$tahun;$j>$batas;$j--)
-                                            {
-                                            ?>
-                                            <option value="<?php echo $j ?>"><?php echo $j; ?></option>
-                                            <?php 
-                                            }
-                                            ?>
-                                        </select>
+                                    <input type="text" name="tahun" class="form-control form-control-sm" id="inputEmail2" placeholder="Tahun" required>
                                     </div>
                                 </div>
                             </div>
@@ -230,26 +213,16 @@ if(isset($_POST['update']))
                                 <label for="inputEmail2">Tanggal Diterima </label>
                                 <div class="row">
                                     <div class="form-group col-sm-3">
-                                        <select name="tanggal" id="" class="form-control form-control-sm" id="inputEmail2">
                                             <?php 
                                             $tanggal = date('d',strtotime($data['tgl_diterima']));
                                             $bulan = date('m',strtotime($data['tgl_diterima']));
                                             $tahun = date('Y',strtotime($data['tgl_diterima']));
-                                            for($i=1;$i<=31;$i++)
-                                            {
-                                                if($i<10)
-                                                {
-                                                    $i = "0".$i;
-                                                }
                                             ?>
-                                            <option value="<?php echo $i ?>" <?php if($tanggal == $i){echo"selected";} ?>><?php echo $i; ?></option>
-                                            <?php 
-                                            }
-                                            ?>
-                                        </select>
+                                        <input type="text" name="tanggal" class="form-control form-control-sm" id="inputEmail2" placeholder="Tanggal" value="<?php echo $tanggal ?>" readonly>
+
                                     </div>
                                     <div class="form-group col-sm-5">
-                                        <select name="bulan" id="" class="form-control form-control-sm" id="inputEmail2">
+                                        <select name="bulan" id="" class="form-control form-control-sm" id="inputEmail2" readonly>
                                         <option value="01" <?php if($bulan == "01"){echo"selected";} ?>>Januari</option>
                                         <option value="02" <?php if($bulan == "02"){echo"selected";} ?>>Februari</option>
                                         <option value="03" <?php if($bulan == "03"){echo"selected";} ?>>Maret</option>
@@ -265,7 +238,7 @@ if(isset($_POST['update']))
                                         </select>
                                     </div>
                                     <div class="form-group col-sm-4">
-                                    <input type="text" value="<?php echo $tahun ?>" name="tahun" class="form-control form-control-sm" id="inputEmail2" placeholder="Masukan nomor hp" required>
+                                    <input type="text" value="<?php echo $tahun ?>" name="tahun" class="form-control form-control-sm" id="inputEmail2" placeholder="Masukan nomor hp" readonly>
                                     </div>
                                 </div>
                             </div>

@@ -39,6 +39,12 @@
 					}
 					if ($_GET['halaman'] == 'total_penjualan') {
                         include "system/transaksi/total_penjualan/tampil.php";
+					}
+					if ($_GET['halaman'] == 'absensi') {
+                        include "system/transaksi/absensi/tampil.php";
+					}
+					if ($_GET['halaman'] == 'perhitungan_topsis') {
+                        include "system/transaksi/perhitungan_topsis/tampil.php";
                     }
                 ?>
 			</div>
