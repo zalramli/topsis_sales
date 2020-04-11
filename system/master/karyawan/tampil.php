@@ -30,11 +30,13 @@ if(isset($_POST['simpan']))
         $absensi = round($absensi_temp);
         $total_absensi = $lama_kerja - $absensi;
         $value_kriteria = [$tgl_diterima,0,$total_absensi];
+        $nama_karyawan_detail_temp = $_POST['nama_karyawan'].",".$no_hp.",".$id_karyawan;
+        $nama_karyawan_detail = addslashes($nama_karyawan_detail_temp);
             for($i=0;$i<3;$i++)
             {
                 $data_kriteria = mysqli_fetch_array($tampil_kriteria);
                 $id_kriteria = $data_kriteria['id_kriteria'];
-                $query_insert_detail = mysqli_query($koneksi, "INSERT INTO detail_karyawan (id_detail_karyawan,id_karyawan,id_kriteria,value_kriteria) VALUES (NULL,'$id_karyawan','$id_kriteria','$value_kriteria[$i]') ");
+                $query_insert_detail = mysqli_query($koneksi, "INSERT INTO detail_karyawan (id_detail_karyawan,id_karyawan,id_kriteria,nama_karyawan_detail,value_kriteria) VALUES (NULL,'$id_karyawan','$id_kriteria','$nama_karyawan_detail','$value_kriteria[$i]') ");
                 if($query_insert_detail)
                 {
                     echo "<script>window.location = 'admin.php?halaman=karyawan'</script>";
@@ -68,13 +70,10 @@ if(isset($_POST['update']))
     $no_hp = $_POST['no_hp'];
     $query_update = mysqli_query($koneksi,"UPDATE karyawan SET nama_karyawan='$nama_karyawan',tgl_diterima='$tgl_diterima',alamat='$alamat',no_hp='$no_hp' WHERE id_karyawan='$id_karyawan'");
     if ($query_update) {
-        $tampil_detail_karyawan = mysqli_query($koneksi,"SELECT * FROM detail_karyawan WHERE id_karyawan='$id_karyawan' ORDER BY id_detail_karyawan ASC LIMIT 1");
-        $id_detail_karyawan = null;
-        foreach($tampil_detail_karyawan as $data_detail_karyawan)
-        {
-            $id_detail_karyawan = $data_detail_karyawan['id_detail_karyawan'];
-        }
-        $query_update2 = mysqli_query($koneksi,"UPDATE detail_karyawan SET value_kriteria='$tgl_diterima' WHERE id_detail_karyawan='$id_detail_karyawan'");
+        // berisi implode
+        $nama_karyawan_detail_temp = $_POST['nama_karyawan'].",".$no_hp.",".$id_karyawan;
+        $nama_karyawan_detail = addslashes($nama_karyawan_detail_temp);
+        $query_update2 = mysqli_query($koneksi,"UPDATE detail_karyawan SET nama_karyawan_detail='$nama_karyawan_detail' WHERE id_karyawan='$id_karyawan'");
         if($query_update2)
         {
             echo "<script>window.location = 'admin.php?halaman=karyawan'</script>";
@@ -104,7 +103,7 @@ if(isset($_POST['update']))
                                 placeholder="Masukan nama karyawan" required>
                             </div>
                             <div class="form-group col-sm-6">
-                                <label for="inputEmail2">Tanggal Diterima </label>
+                                <label for="inputEmail2">Tanggal Diterima (e.g : 03 April 2020)</label>
                                 <div class="row">
                                     <div class="form-group col-sm-3">
                                         <input type="text" name="tanggal" class="form-control form-control-sm" id="inputEmail2" placeholder="Tanggal" required>
@@ -167,7 +166,7 @@ if(isset($_POST['update']))
             <tbody>
             <?php
             $no = 1;
-            $query = mysqli_query($koneksi, "SELECT * FROM karyawan ORDER BY tgl_diterima DESC");
+            $query = mysqli_query($koneksi, "SELECT * FROM karyawan ORDER BY nama_karyawan ASC");
             foreach ($query as $data) :
             ?>
                 <tr>
@@ -223,18 +222,18 @@ if(isset($_POST['update']))
                                     </div>
                                     <div class="form-group col-sm-5">
                                         <select name="bulan" id="" class="form-control form-control-sm" id="inputEmail2" readonly>
-                                        <option value="01" <?php if($bulan == "01"){echo"selected";} ?>>Januari</option>
-                                        <option value="02" <?php if($bulan == "02"){echo"selected";} ?>>Februari</option>
-                                        <option value="03" <?php if($bulan == "03"){echo"selected";} ?>>Maret</option>
-                                        <option value="04" <?php if($bulan == "04"){echo"selected";} ?>>April</option>
-                                        <option value="05" <?php if($bulan == "05"){echo"selected";} ?>>Mei</option>
-                                        <option value="06" <?php if($bulan == "06"){echo"selected";} ?>>Juni</option>
-                                        <option value="07" <?php if($bulan == "07"){echo"selected";} ?>>Juli</option>
-                                        <option value="08" <?php if($bulan == "08"){echo"selected";} ?>>Agustus</option>
-                                        <option value="09" <?php if($bulan == "09"){echo"selected";} ?>>September</option>
-                                        <option value="10" <?php if($bulan == "10"){echo"selected";} ?>>Oktober</option>
-                                        <option value="11" <?php if($bulan == "11"){echo"selected";} ?>>November</option>
-                                        <option value="12" <?php if($bulan == "12"){echo"selected";} ?>>Desember</option>
+                                        <option value="01" <?php if($bulan == "01"){echo"selected";} else{echo"disabled";} ?>>Januari</option>
+                                        <option value="02" <?php if($bulan == "02"){echo"selected";} else{echo"disabled";} ?>>Februari</option>
+                                        <option value="03" <?php if($bulan == "03"){echo"selected";} else{echo"disabled";} ?>>Maret</option>
+                                        <option value="04" <?php if($bulan == "04"){echo"selected";} else{echo"disabled";} ?>>April</option>
+                                        <option value="05" <?php if($bulan == "05"){echo"selected";} else{echo"disabled";} ?>>Mei</option>
+                                        <option value="06" <?php if($bulan == "06"){echo"selected";} else{echo"disabled";} ?>>Juni</option>
+                                        <option value="07" <?php if($bulan == "07"){echo"selected";} else{echo"disabled";} ?>>Juli</option>
+                                        <option value="08" <?php if($bulan == "08"){echo"selected";} else{echo"disabled";} ?>>Agustus</option>
+                                        <option value="09" <?php if($bulan == "09"){echo"selected";} else{echo"disabled";} ?>>September</option>
+                                        <option value="10" <?php if($bulan == "10"){echo"selected";} else{echo"disabled";} ?>>Oktober</option>
+                                        <option value="11" <?php if($bulan == "11"){echo"selected";} else{echo"disabled";} ?>>November</option>
+                                        <option value="12" <?php if($bulan == "12"){echo"selected";} else{echo"disabled";} ?>>Desember</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-sm-4">

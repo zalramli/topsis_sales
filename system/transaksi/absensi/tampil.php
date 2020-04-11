@@ -28,7 +28,7 @@ if(isset($_GET['aksi']))
     <div class="panel panel-headline">
         <div class="panel-body">
         <?php 
-        $query = mysqli_query($koneksi, "SELECT * FROM karyawan WHERE id_karyawan NOT IN (SELECT id_karyawan FROM detail_absensi WHERE tgl_absensi='$sekarang')");
+        $query = mysqli_query($koneksi, "SELECT * FROM karyawan WHERE id_karyawan NOT IN (SELECT id_karyawan FROM detail_absensi WHERE tgl_absensi='$sekarang') ORDER BY nama_karyawan ASC") ;
         $count = mysqli_num_rows($query);
         if($hari == "Sunday")
         {

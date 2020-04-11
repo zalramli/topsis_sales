@@ -13,11 +13,11 @@
             if ($query) {
                 foreach($query as $row)
                 {
-                    if(!isset($data[$row['id_karyawan']])){
-                        $data[$row['id_karyawan']]=[];
+                    if(!isset($data[$row['nama_karyawan_detail']])){
+                        $data[$row['nama_karyawan_detail']]=[];
                     }
-                    if(!isset($data[$row['id_karyawan']][$row['nama_kriteria']])){
-                        $data[$row['id_karyawan']][$row['nama_kriteria']]=[];
+                    if(!isset($data[$row['nama_karyawan_detail']][$row['nama_kriteria']])){
+                        $data[$row['nama_karyawan_detail']][$row['nama_kriteria']]=[];
                     }
 
                     if(!isset($nilai_kuadrat[$row['nama_kriteria']])){
@@ -36,7 +36,7 @@
                     }
                     $bobot[$row['nama_kriteria']]=$row['bobot'];
                     $atribut[$row['nama_kriteria']]=$row['atribut'];
-                    $data[$row['id_karyawan']][$row['nama_kriteria']] = $row['value_kriteria'];
+                    $data[$row['nama_karyawan_detail']][$row['nama_kriteria']] = $row['value_kriteria'];
                     $nilai_kuadrat[$row['nama_kriteria']]+=pow($row['value_kriteria'],2);
                     $kriterias[]=$row['nama_kriteria'];
                 }
@@ -56,6 +56,7 @@
                 <tr>
                     <th class="text-center" width="5%" rowspan="2">No</th>
                     <th class="text-center" rowspan="2">Nama karyawan</th>
+                    <th class="text-center" rowspan="2">No Hp</th>
                     <th class="text-center" colspan="<?php echo $jml_kriteria;?>">KRITERIA</th>
                 </tr>
                 <tr>
@@ -72,10 +73,19 @@
                 <tbody>
                     <?php
                     $i=0;
-                    foreach($data as $nama=>$krit){
-                    echo "<tr>
-                        <td>".(++$i)."</td>
-                        <td>$nama</td>";
+                    $nama_karyawan = NULL;
+                    $no_hp = NULL;
+                    foreach($data as $nama => $krit)
+                    {
+                        $explode = explode(",",$nama);
+                        $nama_karyawan = $explode[0];
+                        $no_hp = $explode[1];
+                    ?>
+                        <tr>
+                            <td class="text-center"><?php echo ++$i."." ?></td>
+                            <td><?php echo stripcslashes($nama_karyawan) ?></td>
+                            <td><?php echo $no_hp ?></td>
+                    <?php
                     foreach($kriteria as $k){
                         echo "<td align='center'>$krit[$k]</td>";
                     }
@@ -103,6 +113,7 @@
                 <tr>
                     <th class="text-center" width="5%" rowspan="2">No</th>
                     <th class="text-center" rowspan="2">Nama karyawan</th>
+                    <th class="text-center" rowspan="2">No Hp</th>
                     <th class="text-center" colspan="<?php echo $jml_kriteria;?>">KRITERIA</th>
                 </tr>
                 <tr>
@@ -118,13 +129,22 @@
                 </thead>
                 <tbody>
                 <?php
-                $i=0;
-                foreach($data as $nama=>$krit){
-                    echo "<tr>
-                    <td>".(++$i)."</td>
-                    <td>{$nama}</td>";
+                    $i=0;
+                    $nama_karyawan = NULL;
+                    $no_hp = NULL;
+                    foreach($data as $nama => $krit)
+                    {
+                        $explode = explode(",",$nama);
+                        $nama_karyawan = $explode[0];
+                        $no_hp = $explode[1];
+                    ?>
+                        <tr>
+                            <td class="text-center"><?php echo ++$i."." ?></td>
+                            <td><?php echo stripcslashes($nama_karyawan) ?></td>
+                            <td><?php echo $no_hp ?></td>
+                    <?php
                     foreach($kriteria as $k){
-                    echo "<td align='center'>".round(($krit[$k]/sqrt($nilai_kuadrat[$k])),4)."</td>";
+                    echo "<td align='center'>".round(($krit[$k]/sqrt($nilai_kuadrat[$k])),3)."</td>";
                     }
                     echo
                     "</tr>\n";
@@ -151,6 +171,7 @@
                 <tr>
                     <th class="text-center" width="5%" rowspan="2">No</th>
                     <th class="text-center" rowspan="2">Nama karyawan</th>
+                    <th class="text-center" rowspan="2">No Hp</th>
                     <th class="text-center" colspan="<?php echo $jml_kriteria;?>">KRITERIA</th>
                 </tr>
                 <tr>
@@ -168,12 +189,21 @@
                     <?php
                     $i=0;
                     $y=array();
-                    foreach($data as $nama=>$krit){
-                    echo "<tr>
-                        <td>".(++$i)."</td>
-                        <td>{$nama}</td>";
+                    $nama_karyawan = NULL;
+                    $no_hp = NULL;
+                    foreach($data as $nama => $krit)
+                    {
+                        $explode = explode(",",$nama);
+                        $nama_karyawan = $explode[0];
+                        $no_hp = $explode[1];
+                    ?>
+                        <tr>
+                            <td class="text-center"><?php echo ++$i."." ?></td>
+                            <td><?php echo stripcslashes($nama_karyawan) ?></td>
+                            <td><?php echo $no_hp ?></td>
+                    <?php
                     foreach($kriteria as $k){
-                        $y[$k][$i-1]=round(($krit[$k]/sqrt($nilai_kuadrat[$k])),4)*$bobot[$k];
+                        $y[$k][$i-1]=round(($krit[$k]/sqrt($nilai_kuadrat[$k])),3)*$bobot[$k];
                         echo "<td align='center'>".$y[$k][$i-1]."</td>";
                     }
                     echo
@@ -219,7 +249,15 @@
                     <?php
                     $yplus=array();
                     foreach($kriteria as $k){
-                        $yplus[$k]=([$k]?max($y[$k]):min($y[$k]));
+                        if($atribut[$k] == "Benefit")
+                        {
+                            $yplus[$k]=([$k]?max($y[$k]):min($y[$k]));
+                        }
+                        else 
+                        {
+                            $yplus[$k]=([$k]?min($y[$k]):max($y[$k]));
+
+                        }
                         echo "<th>$yplus[$k]</th>";
                     }
                     ?>
@@ -263,7 +301,14 @@
                     <?php
                     $ymin=array();
                     foreach($kriteria as $k){
-                        $ymin[$k]=[$k]?min($y[$k]):max($y[$k]);
+                        if($atribut[$k] == "Cost")
+                        {
+                            $ymin[$k]=[$k]?max($y[$k]):min($y[$k]);
+                        }
+                        else 
+                        {
+                            $ymin[$k]=[$k]?min($y[$k]):max($y[$k]);
+                        }
                         echo "<th>{$ymin[$k]}</th>";
                     }
                     ?>
@@ -288,23 +333,34 @@
                 <thead>
                     <tr>
                     <th>No</th>
-                    <th>Nama</th>
+                    <th>Nama Karyawan</th>
+                    <th>No Hp</th>
                     <th>D<suo>+</sup></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
+                <?php
                     $i=0;
                     $dplus=array();
-                    foreach($data as $nama=>$krit){
-                    echo "<tr>
-                        <td>".(++$i)."</td>
-                        <td>{$nama}</td>";
+                    $nama_karyawan = NULL;
+                    $no_hp = NULL;
+                    foreach($data as $nama => $krit)
+                    {
+                        $explode = explode(",",$nama);
+                        $nama_karyawan = $explode[0];
+                        $no_hp = $explode[1];
+                    ?>
+                        <tr>
+                            <td class="text-center"><?php echo ++$i."." ?></td>
+                            <td><?php echo stripcslashes($nama_karyawan) ?></td>
+                            <td><?php echo $no_hp ?></td>
+                    <?php
+                    
                     foreach($kriteria as $k){
                         if(!isset($dplus[$i-1])) $dplus[$i-1]=0;
                         $dplus[$i-1]+=pow($yplus[$k]-$y[$k][$i-1],2);
                     }
-                    echo "<td>".round(sqrt($dplus[$i-1]),6)."</td>
+                    echo "<td>".round(sqrt($dplus[$i-1]),3)."</td>
                         </tr>\n";
                     }
                     ?>
@@ -328,7 +384,8 @@
                 <thead>
                     <tr>
                     <th>No</th>
-                    <th>Nama</th>
+                    <th>Nama Karyawan</th>
+                    <th>No Hp</th>
                     <th>D<suo>-</sup></th>
                     </tr>
                 </thead>
@@ -336,15 +393,24 @@
                     <?php
                     $i=0;
                     $dmin=array();
-                    foreach($data as $nama=>$krit){
-                    echo "<tr>
-                        <td>".(++$i)."</td>
-                        <td>{$nama}</td>";
+                    $nama_karyawan = NULL;
+                    $no_hp = NULL;
+                    foreach($data as $nama => $krit)
+                    {
+                        $explode = explode(",",$nama);
+                        $nama_karyawan = $explode[0];
+                        $no_hp = $explode[1];
+                    ?>
+                        <tr>
+                            <td class="text-center"><?php echo ++$i."." ?></td>
+                            <td><?php echo stripcslashes($nama_karyawan) ?></td>
+                            <td><?php echo $no_hp ?></td>
+                    <?php
                     foreach($kriteria as $k){
                         if(!isset($dmin[$i-1]))$dmin[$i-1]=0;
                         $dmin[$i-1]+=pow($ymin[$k]-$y[$k][$i-1],2);
                     }
-                    echo "<td>".round(sqrt($dmin[$i-1]),6)."</td>
+                    echo "<td>".round(sqrt($dmin[$i-1]),3)."</td>
                         </tr>\n";
                     }
                     ?>
@@ -368,7 +434,8 @@
                 <thead>
                     <tr>
                     <th>No</th>
-                    <th>Nama</th>
+                    <th>Nama Karyawan</th>
+                    <th>No Hp</th>
                     <th>V<sub>i</sub></th>
                     </tr>
                 </thead>
@@ -376,14 +443,24 @@
                     <?php
                     $i=0;
                     $V=array();
-                    foreach($data as $nama=>$krit){
-                    echo "<tr>
-                        <td>".(++$i)."</td>
-                        <td>{$nama}</td>";
+                    $nama_karyawan = NULL;
+                    $no_hp = NULL;
+                    foreach($data as $nama => $krit)
+                    {
+                        $explode = explode(",",$nama);
+                        $nama_karyawan = $explode[0];
+                        $no_hp = $explode[1];
+                    ?>
+                        <tr>
+                            <td class="text-center"><?php echo ++$i."." ?></td>
+                            <td><?php echo stripcslashes($nama_karyawan) ?></td>
+                            <td><?php echo $no_hp ?></td>
+                    <?php
                     foreach($kriteria as $k){
-                        $V[$i-1]=$dmin[$i-1]/($dmin[$i-1]+$dplus[$i-1]);
+                        $V[$i-1]=sqrt($dmin[$i-1])/(sqrt($dmin[$i-1])+sqrt($dplus[$i-1]));
                     }
-                    echo "<td>{$V[$i-1]}</td></tr>\n";
+                    $preferensi = round($V[$i-1],3);
+                    echo "<td>{$preferensi}</td></tr>\n";
                     }
                     ?>
                 </tbody>

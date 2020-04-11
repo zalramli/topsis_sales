@@ -45,6 +45,9 @@
 					}
 					if ($_GET['halaman'] == 'perhitungan_topsis') {
                         include "system/transaksi/perhitungan_topsis/tampil.php";
+					}
+					if ($_GET['halaman'] == 'perangkingan') {
+                        include "system/transaksi/perangkingan/tampil.php";
                     }
                 ?>
 			</div>
