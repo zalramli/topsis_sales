@@ -108,7 +108,7 @@
                 if($count_data > 1)
                 {
             ?>
-            <table id="example" class="table table-striped table-bordered" style="width:100%">
+            <table id="example2" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                 <tr>
                     <th class="text-center" width="5%" rowspan="2">No</th>
@@ -166,7 +166,7 @@
                 if($count_data > 1)
                 {
             ?>
-            <table id="example" class="table table-striped table-bordered" style="width:100%">
+            <table id="example3" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                 <tr>
                     <th class="text-center" width="5%" rowspan="2">No</th>
@@ -226,7 +226,7 @@
                 if($count_data > 1)
                 {
             ?>
-            <table id="example" class="table table-striped table-bordered" style="width:100%">
+            <table id="example4" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                     <tr>
                     <th colspan='<?php echo $jml_kriteria;?>'>Kriteria</th>
@@ -278,7 +278,7 @@
                 if($count_data > 1)
                 {
             ?>
-            <table id="example" class="table table-striped table-bordered" style="width:100%">
+            <table id="example5" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                     <tr>
                     <th colspan='<?php echo $jml_kriteria;?>'>Kriteria</th>
@@ -329,7 +329,7 @@
                 if($count_data > 1)
                 {
             ?>
-            <table id="example" class="table table-striped table-bordered" style="width:100%">
+            <table id="example6" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                     <tr>
                     <th>No</th>
@@ -380,7 +380,7 @@
                 if($count_data > 1)
                 {
             ?>
-            <table id="example" class="table table-striped table-bordered" style="width:100%">
+            <table id="example7" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                     <tr>
                     <th>No</th>
@@ -430,7 +430,7 @@
                 if($count_data > 1)
                 {
             ?>
-            <table id="example" class="table table-striped table-bordered" style="width:100%">
+            <table id="example8" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                     <tr>
                     <th>No</th>

@@ -24,7 +24,7 @@ if(isset($_GET['aksi']))
 }
 ?>
 <div class="container-fluid">
-    <h3 class="page-title">Absensi Karyawan Tanggal <?php echo $sekarang; ?></h3>
+    <h3 class="page-title">Absensi Karyawan Tanggal <?php echo date('d F Y',strtotime($sekarang)) ?></h3>
     <div class="panel panel-headline">
         <div class="panel-body">
         <?php 

@@ -1,6 +1,12 @@
 <!doctype html>
 <html lang="en">
-
+<?php 
+session_start();
+include "koneksi/koneksi.php";
+if (!isset($_SESSION['username_user'])) {
+    header('location:index.php');
+} 
+?>
 <head>
 	<?php 
 	include "koneksi/koneksi.php";
@@ -36,6 +42,9 @@
 					}
 					if ($_GET['halaman'] == 'kriteria') {
                         include "system/master/kriteria/tampil.php";
+					}
+					if ($_GET['halaman'] == 'user') {
+                        include "system/master/user/tampil.php";
 					}
 					if ($_GET['halaman'] == 'total_penjualan') {
                         include "system/transaksi/total_penjualan/tampil.php";
