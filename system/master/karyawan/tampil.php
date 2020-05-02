@@ -106,7 +106,7 @@ if(isset($_POST['update']))
                                 <label for="inputEmail2">Tanggal Diterima (e.g : 03 April 2020)</label>
                                 <div class="row">
                                     <div class="form-group col-sm-3">
-                                        <input type="text" name="tanggal" class="form-control form-control-sm" id="inputEmail2" placeholder="Tanggal" required>
+                                        <input type="text" name="tanggal" class="form-control form-control-sm tanggal" id="inputEmail2" placeholder="Tanggal" required>
                                     </div>
                                     <div class="form-group col-sm-5">
                                         <select name="bulan" id="" class="form-control form-control-sm" id="inputEmail2">
@@ -125,7 +125,7 @@ if(isset($_POST['update']))
                                         </select>
                                     </div>
                                     <div class="form-group col-sm-4">
-                                    <input type="text" name="tahun" class="form-control form-control-sm" id="inputEmail2" placeholder="Tahun" required>
+                                    <input type="text" name="tahun" class="form-control form-control-sm tahun" id="inputEmail2" placeholder="Tahun" required>
                                     </div>
                                 </div>
                             </div>
@@ -136,7 +136,7 @@ if(isset($_POST['update']))
                             <div class="form-group col-sm-6">
                                 <label for="inputEmail2">No Hp </label>
                                 <input type="text" name="no_hp"
-                                class="form-control form-control-sm" id="inputEmail2"
+                                class="form-control form-control-sm hp" id="inputEmail2"
                                 placeholder="Masukan nomor hp" required>
                             </div>
                         </div>
@@ -248,7 +248,7 @@ if(isset($_POST['update']))
                             <div class="form-group col-sm-6">
                                 <label for="inputEmail2">No Hp </label>
                                 <input type="text" value="<?php echo $data['no_hp'] ?>" name="no_hp"
-                                class="form-control form-control-sm" id="inputEmail2"
+                                class="form-control form-control-sm hp" id="inputEmail2"
                                 placeholder="Masukan nomor hp" required>
                             </div>
                         </div>

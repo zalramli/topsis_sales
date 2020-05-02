@@ -73,7 +73,7 @@ if(isset($_POST['update']))
                             <div class="form-group col-sm-6">
                                 <label for="inputEmail2">Bobot </label>
                                 <input type="text" name="bobot"
-                                class="form-control form-control-sm" id="inputEmail2"
+                                class="form-control form-control-sm bobot" id="inputEmail2"
                                 placeholder="Masukan besar bobot" required>
                             </div>
                         </div>
@@ -165,7 +165,7 @@ if(isset($_POST['update']))
                     <div class="form-group col-sm-6">
                         <label for="inputEmail2">Bobot </label>
                         <input type="text" name="bobot"
-                            class="form-control form-control-sm" id="inputEmail2"
+                            class="form-control form-control-sm bobot" id="inputEmail2"
                             placeholder="Masukan besar bobot" value="<?php echo $data['bobot'] ?>" required>
                     </div>
                 </div>

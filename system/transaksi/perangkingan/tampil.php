@@ -122,17 +122,17 @@
                 {
             ?>
             <table id="example" class="table table-striped table-bordered" style="width:100%">
-            <thead>
-                <tr>
-                    <th class="text-center">No</th>
-                    <th>Nama Karyawan</th>
-                    <th>No Hp</th>
-                    <th>V<sub>i</sub></th>
-                </tr>
+                <thead>
+                    <tr>
+                        <th class="text-center">No</th>
+                        <th>Nama Karyawan</th>
+                        <th>No Hp</th>
+                        <th>V<sub>i</sub></th>
+                    </tr>
                 </thead>
-            <tbody>
-                
-                <?php
+                <tbody>
+
+                    <?php
                     $i=0;
                     $V=[];
                     $nama_karyawan = NULL;
@@ -142,7 +142,7 @@
                     {
                         ++$i;
                     ?>
-                        <?php 
+                    <?php 
                         foreach($kriteria as $k)
                         {
                             $V[$i-1]=sqrt($dmin[$i-1])/(sqrt($dmin[$i-1])+sqrt($dplus[$i-1]));
@@ -172,19 +172,19 @@
                             $nama_karyawan = $explode[0];
                             $no_hp = $explode[1];
                     ?>
-                        <tr>
-                            <td class="text-center"><?php echo $no++."." ?></td>
-                            <td><?php echo stripcslashes($nama_karyawan) ?></td>
-                            <td><?php echo $no_hp ?></td>
-                            <td><?php echo $tampil['nilai'] ?></td>
-                        </tr>
+                    <tr>
+                        <td class="text-center"><?php echo $no++."." ?></td>
+                        <td><?php echo stripcslashes($nama_karyawan) ?></td>
+                        <td><?php echo $no_hp ?></td>
+                        <td><?php echo $tampil['nilai'] ?></td>
+                    </tr>
                     <?php 
                         }
                     ?>
                 </tbody>
             </table>
             <?php } else { ?>
-                <h2 class="text-center">Minimal 2 Data Karyawan</h2>
+            <h2 class="text-center">Minimal 2 Data Karyawan</h2>
             <?php } ?>
         </div>
     </div>

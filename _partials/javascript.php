@@ -4,6 +4,16 @@
 <script src="assets/scripts/klorofil-common.js"></script>
 <script src="assets/vendor/jquery/jquery.dataTables.min.js"></script>
 <script src="assets/vendor/jquery/dataTables.bootstrap4.min.js"></script>
+<script src="assets/vendor/jquery/jquery.mask.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('.bobot').mask('0');
+		$('.tanggal').mask('00');
+		$('.tahun').mask('0000');
+		$('.hp').mask('000000000000000');
+		$('.total_penjualan').mask('0000');
+	})
+</script>
 <script>
 $(document).ready(function() {
     $('#example').DataTable({
